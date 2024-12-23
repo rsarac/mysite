@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 
 const userRegister = async (req, res) => {
-  const { first_name, last_name, email, password } = req.body;
+  const { first_name, last_name, email, password, role } = req.body;
 
   try {
     const newUser = new User({
@@ -9,6 +9,7 @@ const userRegister = async (req, res) => {
       password,
       first_name,
       last_name,
+      role,
     });
 
     const existingUser = await User.findOne({ email });
@@ -21,9 +22,10 @@ const userRegister = async (req, res) => {
       });
 
     const savedUser = await newUser.save();
-    const { role, ...user_data } = savedUser.toObject();
+    const { ...user_data } = savedUser.toObject();
 
     delete user_data.password;
+    delete user_data.role;
 
     res.status(200).json({
       status: 'success',

@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       select: false,
-      default: 'public',
+      default: '0x01',
     },
   },
   { timestamps: true }
